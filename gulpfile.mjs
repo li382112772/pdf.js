@@ -2117,19 +2117,27 @@ gulp.task(
       console.log();
       console.log("### Starting local server");
 
-      let port = 8888;
+      let host = "0.0.0.0";
+      const hostIndex = process.argv.indexOf("--host");
+      if (hostIndex >= 0 && hostIndex + 1 < process.argv.length) {
+        host = process.argv[hostIndex + 1];
+      } else {
+        console.error("No host specified: using default (0.0.0.0)");
+      }
+      
+      let port = 8080;
       const i = process.argv.indexOf("--port");
       if (i >= 0 && i + 1 < process.argv.length) {
         const p = parseInt(process.argv[i + 1], 10);
         if (!isNaN(p)) {
           port = p;
         } else {
-          console.error("Invalid port number: using default (8888)");
+          console.error("Invalid port number: using default (8080)");
         }
       }
 
       const { WebServer } = await import("./test/webserver.mjs");
-      const server = new WebServer({ port });
+      const server = new WebServer({ host, port });
       server.start();
     }
   )
