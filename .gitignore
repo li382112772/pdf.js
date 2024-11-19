@@ -10,6 +10,7 @@ examples/node/pdf2png/*.png
 .git/
 .1024nix
 .1024feature-file
+.1024*
 Thumbs.db
 .nfs*
 .pnpm-store/
